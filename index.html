@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Time tracking dashboard</title>
+  <link rel="stylesheet" href="./Style.css">
+  <script async src="./script.js"></script>
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="user-card">
+      <div class="user-info">
+        <img src="./images/image-jeremy.png" alt="User profile image">
+        <div>
+          <p>Report for</p>
+          <h1>Jeremy Robson</h1>
+        </div>
+      </div>
+      <div class="time-selector">
+        <button type="button" class="active" id="daily">Daily</button>
+        <button type="button" id="Weekly">Weekly</button>
+        <button type="button" id="Monthly">Monthly</button>
+      </div>
+    </div>
+    
+    <div class="card work">
+      <img src="./images/icon-work.svg" alt="Work icon">
+      <div class="card-content">
+        <div class="title">
+          Work
+          <div class="settings"><svg width="21" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" fill="currentcolor" fill-rule="evenodd"/></svg></div>
+        </div>
+        <div class="Stats">
+          <h1 id="current1"></h1> <!-- daily -->
+          <p id="prev1"></p> <!-- daily -->
+        </div>
+      </div>
+    </div>
+
+    <div class="card play">
+      <img src="./images/icon-play.svg" alt="Play icon">
+      <div class="card-content">
+        <div class="title">
+          Play
+          <div class="settings"><svg width="21" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" fill="currentcolor" fill-rule="evenodd"/></svg></div>
+        </div>
+        <div class="Stats">
+          <h1 id="current2">1hr</h1> <!-- daily -->
+          <p id="prev2">Previous - 2hrs</p> <!-- daily -->
+        </div>
+      </div>
+    </div>
+
+    <div class="card study">
+      <img src="./images/icon-study.svg" alt="Study icon">
+      <div class="card-content">
+        <div class="title">
+          Study
+          <div class="settings"><svg width="21" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" fill="currentcolor" fill-rule="evenodd"/></svg></div>
+        </div>
+        <div class="Stats">
+          <h1 id="current3">0hrs</h1> <!-- daily -->
+          <p id="prev3">Previous - 1hr</p> <!-- daily -->
+        </div>
+      </div>
+    </div>
+
+    <div class="card exercise">
+      <img src="./images/icon-exercise.svg" alt="exercise icon">
+      <div class="card-content">
+        <div class="title">
+          Exercise
+          <div class="settings"><svg width="21" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" fill="currentcolor" fill-rule="evenodd"/></svg></div>
+        </div>
+        <div class="Stats" id="stats4">
+          <h1 id="current4">1hr</h1> <!-- daily -->
+          <p id="prev4">Previous - 1hr</p> <!-- daily -->
+        </div>
+      </div>
+    </div>
+
+    <div class="card social">
+      <img src="./images/icon-social.svg" alt="Social icon">
+      <div class="card-content">
+        <div class="title">
+          Social
+          <div class="settings"><svg width="21" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" fill="currentcolor" fill-rule="evenodd"/></svg></div>
+        </div>
+        <div class="Stats" id="stats5">
+          <h1 id="current5">1hr</h1> <!-- daily -->
+          <p id="prev5">Previous - 3hrs</p> <!-- daily -->
+        </div>
+      </div>
+    </div>
+
+    <div class="card self-care">
+      <img src="./images/icon-self-care.svg" alt="Self care icon">
+      <div class="card-content">
+        <div class="title">
+          Self Care
+          <div class="settings"><svg width="21" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" fill="currentcolor" fill-rule="evenodd"/></svg></div>
+        </div>
+        <div class="Stats" id="stats6">
+          <h1 id="current6">0hrs</h1> <!-- daily -->
+          <p id="prev6">Previous - 1hr</p> <!-- daily -->
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">Esteban Correa</a>.
+  </div>
+</body>
+</html>
