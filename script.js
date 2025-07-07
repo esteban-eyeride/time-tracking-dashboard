@@ -20,7 +20,7 @@ const monthlyBtn = document.getElementById("Monthly");
 
 let data;
 
-fetch("/data.json").then((response) => {
+fetch("https://raw.githubusercontent.com/esteban-eyeride/time-tracking-dashboard/refs/heads/main/data.json").then((response) => {
     if(!response.ok) return console.log("Oops! Something went wrong");
 
     return response.json();
