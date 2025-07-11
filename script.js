@@ -1,112 +1,50 @@
-const curr1 = document.getElementById("current1");
-const prev1 = document.getElementById("prev1");
-const curr2 = document.getElementById("current2");
-const prev2 = document.getElementById("prev2");
-const curr3 = document.getElementById("current3");
-const prev3 = document.getElementById("prev3");
-const curr4 = document.getElementById("current4");
-const prev4 = document.getElementById("prev4");
-const curr5 = document.getElementById("current5");
-const prev5 = document.getElementById("prev5");
-const curr6 = document.getElementById("current6");
-const prev6 = document.getElementById("prev6");
+const cards = document.querySelectorAll(".card");
+const timeBtn = document.querySelectorAll(".timeBtn");
 
-const curr = [curr1,curr2,curr3,curr4,curr5,curr6];
-const prev = [prev1,prev2,prev3,prev4,prev5,prev6];
-
-const dailyBtn = document.getElementById("daily");
-const weeklyBtn = document.getElementById("Weekly");
-const monthlyBtn = document.getElementById("Monthly");
-
-let data;
-
-fetch("https://raw.githubusercontent.com/esteban-eyeride/time-tracking-dashboard/refs/heads/main/data.json").then((response) => {
-    if(!response.ok) return console.log("Oops! Something went wrong");
-
-    return response.json();
-}) .then((json) => {
-
-    data = json;
-
-    dailyPopulate(json)
+fetch("https://raw.githubusercontent.com/esteban-eyeride/time-tracking-dashboard/refs/heads/main/data.json")
     
-})
+    .then((response) => {
+        if (!response.ok) {console.log("could not find data!")}
+        return response.json();
+    })
 
-function dailyPopulate() {
+    .then((data) => {
+        populateCards(data,"weekly");
 
-    dailyBtn.classList.add("active");
-    weeklyBtn.classList.remove("active");
-    monthlyBtn.classList.remove("active");
+        timeBtn.forEach((btn) => {
+            btn.addEventListener("click",(e) => {
 
-    for (const stat of curr){
-        if (data[curr.indexOf(stat)].timeframes.daily.current === 1) {
-            stat.textContent = `${data[curr.indexOf(stat)].timeframes.daily.current}hr`
-            }
-        else {
-            stat.textContent = `${data[curr.indexOf(stat)].timeframes.daily.current}hrs`
-            }
-        }
+                timeBtn.forEach((btn) => btn.classList.remove("active"));
+                e.target.classList.add("active");
 
-    for (const stat of prev){
-        if (data[prev.indexOf(stat)].timeframes.daily.previous === 1) {
-            stat.textContent = `Previous - ${data[prev.indexOf(stat)].timeframes.daily.previous}hr`
-            }
-        else {
-            stat.textContent = `Previous - ${data[prev.indexOf(stat)].timeframes.daily.previous}hrs`
-            }
-        }
-};
+                const time = e.target.textContent.toLowerCase();
+                populateCards(data, time)
 
-function weeklyPopulate() {
+            })
+        })
+    });
 
-    dailyBtn.classList.remove("active");
-    weeklyBtn.classList.add("active");
-    monthlyBtn.classList.remove("active");
+function populateCards (data, timeframe) {
+    cards.forEach((card,index) => {
 
-    for (const stat of curr){
-        if (data[curr.indexOf(stat)].timeframes.weekly.current === 1) {
-            stat.textContent = `${data[curr.indexOf(stat)].timeframes.weekly.current}hr`
-            }
-        else {
-            stat.textContent = `${data[curr.indexOf(stat)].timeframes.weekly.current}hrs`
-            }
-        }
+        const currTime = card.querySelector(".StatCurrent");
+        const prevTime = card.querySelector(".StatPrevious");
 
-    for (const stat of prev){
-        if (data[prev.indexOf(stat)].timeframes.weekly.previous === 1) {
-            stat.textContent = `Previous - ${data[prev.indexOf(stat)].timeframes.weekly.previous}hr`
-            }
-        else {
-            stat.textContent = `Previous - ${data[prev.indexOf(stat)].timeframes.weekly.previous}hrs`
-            }
-        }
-};
+        const timeframeData = data[index].timeframes[timeframe];
 
-function monthlyPopulate() {
+        const prevText =
+            timeframe === "daily"
+            ? "yesterday"
+            : timeframe === "weekly"
+            ? "Last week"
+            : "Last month";
 
-    dailyBtn.classList.remove("active");
-    weeklyBtn.classList.remove("active");
-    monthlyBtn.classList.add("active");
+        function HrsCheck (hour) {return hour === 1 ? "hr" : "hrs"}; 
 
-    for (const stat of curr){
-        if (data[curr.indexOf(stat)].timeframes.monthly.current === 1) {
-            stat.textContent = `${data[curr.indexOf(stat)].timeframes.monthly.current}hr`
-            }
-        else {
-            stat.textContent = `${data[curr.indexOf(stat)].timeframes.monthly.current}hrs`
-            }
-        }
-
-    for (const stat of prev){
-        if (data[prev.indexOf(stat)].timeframes.monthly.previous === 1) {
-            stat.textContent = `Previous - ${data[prev.indexOf(stat)].timeframes.monthly.previous}hr`
-            }
-        else {
-            stat.textContent = `Previous - ${data[prev.indexOf(stat)].timeframes.monthly.previous}hrs`
-            }
-        }
-};
-
-dailyBtn.addEventListener("click",dailyPopulate);
-weeklyBtn.addEventListener("click",weeklyPopulate);
-monthlyBtn.addEventListener("click",monthlyPopulate);
+        currHrs = timeframeData.current;
+        prevHrs = timeframeData.previous;
+        
+        currTime.textContent = `${currHrs} ${HrsCheck(currHrs)}`;
+        prevTime.textContent = `${prevText} - ${prevHrs} ${HrsCheck(prevHrs)}`;
+    });
+}
